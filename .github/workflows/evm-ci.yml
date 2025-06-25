@@ -34,7 +34,14 @@ jobs:
     - name: 📦 Install Dependencies
       working-directory: ./evm
       run: |
-        npm ci
+        # Check if package-lock.json is in sync, if not regenerate it
+        if npm ci 2>/dev/null; then
+          echo "✅ Package lock file in sync"
+        else
+          echo "🔄 Package lock file out of sync, regenerating..."
+          rm -f package-lock.json
+          npm install
+        fi
         echo "✅ Dependencies installed successfully"
 
     - name: 🏗️ Compile Contracts
@@ -186,7 +193,15 @@ jobs:
 
     - name: 📦 Install Dependencies
       working-directory: ./evm
-      run: npm ci
+      run: |
+        # Check if package-lock.json is in sync, if not regenerate it
+        if npm ci 2>/dev/null; then
+          echo "✅ Package lock file in sync"
+        else
+          echo "🔄 Package lock file out of sync, regenerating..."
+          rm -f package-lock.json
+          npm install
+        fi
 
     - name: ⛽ Generate Gas Report
       working-directory: ./evm
