@@ -14,13 +14,13 @@ cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [programs.localnet]
-ziro_delta_amm = "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"
-ziro_delta_oracle = "8pZdF5QrMk4sGjY6nH7E8P3tA6mD9kR2L1xF5yN7cS4"
-ziro_delta_governance = "7nYcM2sB8kF3dP6wE9rT5xL4mH8qR9zA2tK6vJ3eG1N"
-ziro_delta_epoch_manager = "6xK8vP3nF7mE2rA5sH9tL4zR6qG8wD3yB5nJ2kC7eM9"
-ziro_delta_minting = "5wH9sL3mK8fD2nE6tP4rA7xG5zB8qR9vY2jN6kC3eF8"
-ziro_delta_emergency = "4vG8rK2jH6mL9nE3tP7sA5xF4zB9qR8wY6jN3kC2eD7"
-mock_oracle = "3uF7qR6jK5mL8nE2tP4sA9xG3zB6qR7wY5jN2kC9eF4"
+ziro_delta_amm = "NK9gDUoa4TbRRGbCn2XGUZ2TGgZzKHodJPNc1SippMt9"
+ziro_delta_oracle = "R7Sz61ijudMTApmDmnDW8CkUcQXJLbDGXeANf2G7JQK9"
+ziro_delta_governance = "PJX2wtgAzG6Ejw4Zz6FkW4Ug8sB48dqKa1UgfZCMXZ7v"
+ziro_delta_epoch_manager = "STKNhmVRzRhKjYeEdx5iiQNoGyTU7H4dnn5MqmxsPGwq"
+ziro_delta_minting = "j1UekRtCUPTvpCWueHk7gPVHhA8Ec8ibh5rURCb34Buy"
+ziro_delta_emergency = "MM3ZfaE7dtH6qf4NfmPntaBMkEB3HxjXFsomrhZr9aN6"
+mock_oracle = "TtJi2NxdB1qv6eZSML5AkJ8v3GNBVmofcWqpLUrTGdGE"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
