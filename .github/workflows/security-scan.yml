@@ -250,13 +250,13 @@ jobs:
     
     steps:
     - name: 📥 Download Security Reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: evm-security-analysis
         path: ./evm-security
 
     - name: 📥 Download Solana Security Reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: solana-security-analysis
         path: ./solana-security

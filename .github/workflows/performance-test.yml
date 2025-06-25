@@ -357,13 +357,13 @@ jobs:
     
     steps:
     - name: 📥 Download Performance Reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: evm-performance-analysis
         path: ./evm-perf
 
     - name: 📥 Download Solana Performance Reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: solana-performance-analysis
         path: ./solana-perf

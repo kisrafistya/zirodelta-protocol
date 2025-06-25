@@ -409,7 +409,7 @@ jobs:
     
     steps:
     - name: 📥 Download Integration Results
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
 
     - name: 🌉 Cross-Chain Consistency Test
       run: |

@@ -343,7 +343,7 @@ jobs:
     
     steps:
     - name: 📥 Download Deployment Artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
 
     - name: 📋 Generate Deployment Report
       run: |

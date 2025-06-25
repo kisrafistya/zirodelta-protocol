@@ -370,7 +370,7 @@ jobs:
     
     steps:
     - name: 📥 Download All Reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
 
     - name: 🏭 Production Readiness Assessment
       run: |
