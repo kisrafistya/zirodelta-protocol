@@ -14,7 +14,7 @@ on:
 
 env:
   SOLANA_VERSION: '1.18.2'
-  RUST_VERSION: '1.70.0'
+  RUST_VERSION: '1.75.0'
   NODE_VERSION: '18'
 
 jobs:
@@ -27,11 +27,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: 🦀 Setup Rust
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@stable
       with:
-        profile: minimal
         toolchain: ${{ env.RUST_VERSION }}
-        override: true
         components: rustfmt, clippy
 
     - name: ⚡ Setup Solana CLI
