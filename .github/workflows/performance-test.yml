@@ -178,12 +178,21 @@ jobs:
         echo "✅ Storage layout optimized for gas efficiency" >> gas-report.md
 
     - name: 📤 Upload EVM Performance Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: evm-performance-analysis
         path: |
           evm/gas-report.md
           evm/gas-results.json
+
+    - name: 📤 Upload Gas Analysis Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: evm-gas-analysis
+        path: |
+          evm/gas-analysis-report.md
+          evm/gas-optimization-report.md
 
   solana-performance:
     name: 🟠 Solana Performance Analysis
@@ -334,10 +343,12 @@ jobs:
         echo "✅ Stack vs heap usage optimized" >> performance-report.md
 
     - name: 📤 Upload Solana Performance Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: solana-performance-analysis
-        path: svm/performance-report.md
+        path: |
+          svm/compute-analysis-report.md
+          svm/memory-analysis-report.md
 
   performance-summary:
     name: 📋 Performance Summary
@@ -397,7 +408,16 @@ jobs:
         echo "**⚡ Performance Status: Optimized for Production**" >> performance-summary.md
 
     - name: 📤 Upload Performance Summary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: complete-performance-analysis
         path: performance-summary.md
+
+    - name: 📤 Upload Load Test Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: load-test-reports
+        path: |
+          load-test-report.md
+          stress-test-results.json

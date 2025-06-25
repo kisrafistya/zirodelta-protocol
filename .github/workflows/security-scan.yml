@@ -124,14 +124,14 @@ jobs:
           echo "- Direct and transitive dependencies checked" >> security-report.md
         fi
 
-    - name: 📤 Upload EVM Security Artifacts
-      uses: actions/upload-artifact@v3
+    - name: 📤 Upload Security Reports
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: evm-security-analysis
+        name: evm-security-reports
         path: |
           evm/security-report.md
-          evm/slither-report.json
-          evm/audit-report.json
+          evm/slither-output.json
 
   solana-security-scan:
     name: 🟠 Solana Security Analysis
@@ -234,13 +234,14 @@ jobs:
           echo "ℹ️ **Cross-Program Calls**: No CPI usage detected" >> security-report.md
         fi
 
-    - name: 📤 Upload Solana Security Artifacts
-      uses: actions/upload-artifact@v3
+    - name: 📤 Upload Solana Security Reports
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: solana-security-analysis
+        name: solana-security-reports
         path: |
           svm/security-report.md
-          svm/*-audit.json
+          svm/cargo-audit.json
 
   security-summary:
     name: 📋 Security Summary Report
@@ -291,18 +292,20 @@ jobs:
         echo "**🛡️ Security Status: Ready for External Audit**" >> combined-security-report.md
 
     - name: 📤 Upload Combined Security Report
-      uses: actions/upload-artifact@v3
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: complete-security-analysis
-        path: combined-security-report.md
+        name: combined-security-report
+        path: |
+          ./comprehensive-security-report.md
 
-    - name: 💬 Comment Security Results
+    - name: 💬 Post Security Summary
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v6
       with:
         script: |
           const fs = require('fs');
-          const securityReport = fs.readFileSync('combined-security-report.md', 'utf8');
+          const securityReport = fs.readFileSync('./comprehensive-security-report.md', 'utf8');
           
           github.rest.issues.createComment({
             issue_number: context.issue.number,

@@ -303,7 +303,7 @@ jobs:
         MATRIX_NETWORK=${{ matrix.network }} node validate-deployment.js
 
     - name: 📤 Upload Deployment Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deployment-${{ matrix.network }}-${{ env.DEPLOYMENT_VERSION }}
         path: |
@@ -361,7 +361,7 @@ jobs:
         echo "🎉 **Deployment Complete! ZiroDelta Protocol is now live!** 🎉" >> deployment-report.md
 
     - name: 📤 Upload Final Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: deployment-final-report
         path: deployment-report.md
@@ -426,3 +426,21 @@ jobs:
         
         echo "📋 Rollback procedure documented and ready for execution"
         echo "🔔 Emergency team has been notified"
+
+    - name: 📤 Upload Staging Deployment Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: staging-deployment-report
+        path: |
+          staging-deployment-report.md
+          staging-addresses.json
+
+    - name: 📤 Upload Production Deployment Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-deployment-report
+        path: |
+          production-deployment-report.md
+          production-addresses.json

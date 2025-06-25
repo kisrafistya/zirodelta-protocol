@@ -249,11 +249,14 @@ jobs:
         
         npx hardhat test test/CrossContractTest.js --network localhost || echo "Cross-contract tests completed"
 
-    - name: 📤 Upload EVM Integration Results
-      uses: actions/upload-artifact@v3
+    - name: 📤 Upload EVM Integration Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: evm-integration-results
-        path: evm/test-results.json
+        path: |
+          evm/integration-test-report.md
+          evm/integration-results.json
 
   solana-integration:
     name: 🟠 Solana Integration Tests
@@ -394,7 +397,7 @@ jobs:
         npm test || echo "Solana integration tests completed"
 
     - name: 📤 Upload Solana Integration Results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: solana-integration-results
         path: svm/test-results.json
@@ -455,10 +458,19 @@ jobs:
         echo "**🚀 Ready for multi-chain production deployment**" >> cross-chain-report.md
 
     - name: 📤 Upload Cross-Chain Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cross-chain-validation
         path: cross-chain-report.md
+
+    - name: 📤 Upload Cross-Chain Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cross-chain-test-results
+        path: |
+          cross-chain-test-report.md
+          cross-chain-results.json
 
   e2e-user-journeys:
     name: 👤 End-to-End User Journeys
@@ -505,8 +517,19 @@ jobs:
         echo "" >> e2e-report.md
         echo "🏆 **All user journeys successfully validated** 🏆" >> e2e-report.md
 
-    - name: 📤 Upload E2E Report
-      uses: actions/upload-artifact@v3
+    - name: 📤 Upload E2E Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: e2e-user-journeys
-        path: e2e-report.md 
+        name: e2e-test-results
+        path: |
+          e2e-test-report.md
+          e2e-results.json
+
+    - name: 📤 Upload Final Integration Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: final-integration-report
+        path: |
+          integration-summary.md 
