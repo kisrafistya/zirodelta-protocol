@@ -1,0 +1,37 @@
+#!/usr/bin/env echidna
+
+# Echidna test for ZiroDeltaMinting.sol
+
+# Set up the contract with mock tokens
+contract TestZiroDeltaMinting is ZiroDeltaMinting {
+    MockERC20 pfrt;
+    MockERC20 nfrt;
+    MockERC20 collateral;
+
+    constructor() ZiroDeltaMinting(address(pfrt), address(nfrt), address(collateral), address(this)) {
+        pfrt = new MockERC20("Positive Funding Rate Token", "PFRT");
+        nfrt = new MockERC20("Negative Funding Rate Token", "NFRT");
+        collateral = new MockERC20("Collateral Token", "USDC");
+    }
+
+    # Test that minting and redeeming doesn't break invariants
+    function echidna_test_mint_redeem(uint256 amount) public {
+        if (amount == 0) { return; }
+
+        collateral.mint(address(this), amount);
+        collateral.approve(address(this), amount);
+
+        mint(amount);
+
+        uint256 pfrtBalance = pfrt.balanceOf(address(this));
+        uint256 nfrtBalance = nfrt.balanceOf(address(this));
+
+        pfrt.approve(address(this), pfrtBalance);
+        nfrt.approve(address(this), nfrtBalance);
+
+        redeem(pfrtBalance, nfrtBalance);
+
+        assert(pfrt.balanceOf(address(this)) == 0);
+        assert(nfrt.balanceOf(address(this)) == 0);
+    }
+}

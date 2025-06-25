@@ -1,0 +1,28 @@
+#!/usr/bin/env echidna
+
+# Echidna test for ZiroDeltaAMM.sol
+
+contract TestZiroDeltaAMM is ZiroDeltaAMM {
+    MockERC20 pfrt;
+    MockERC20 nfrt;
+
+    constructor() ZiroDeltaAMM(address(pfrt), address(nfrt)) {
+        pfrt = new MockERC20("Positive Funding Rate Token", "PFRT");
+        nfrt = new MockERC20("Negative Funding Rate Token", "NFRT");
+
+        pfrt.mint(address(this), 1000e18);
+        nfrt.mint(address(this), 1000e18);
+
+        addLiquidity(1000e18, 1000e18);
+    }
+
+    # Test that swapping doesn't break invariants
+    function echidna_test_swap(uint256 amount) public {
+        if (amount == 0) { return; }
+
+        pfrt.mint(address(this), amount);
+        pfrt.approve(address(this), amount);
+
+        swap(address(pfrt), amount);
+    }
+}

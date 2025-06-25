@@ -1,0 +1,9 @@
+{
+  "minDelay": 3600,
+  "proposers": [],
+  "executors": [],
+  "zdltToken": "0x...",
+  "votingDelay": 1,
+  "votingPeriod": 5,
+  "quorumFraction": 4
+}

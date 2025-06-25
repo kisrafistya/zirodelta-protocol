@@ -1,0 +1,43 @@
+[workspace]
+members = [
+    "programs/ziro_delta_amm",
+    "programs/ziro_delta_oracle", 
+    "programs/ziro_delta_governance",
+    "programs/ziro_delta_epoch_manager",
+    "programs/ziro_delta_minting",
+    "programs/ziro_delta_emergency",
+    "programs/mock_oracle"
+]
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[programs.localnet]
+ziro_delta_amm = "ZDAMMqnmCLcuB6TJNHqfEJgv6dfVA7Vj2hJWqF4eGc1"
+ziro_delta_oracle = "ZDOrcWdLx8bJeqN8XVQQ9c6RgG4M7K3PzFqE2nD5H8t"
+ziro_delta_governance = "ZDGovPK47wVbvJH3MtDk5B2nxE8qG9fL6R7sC1zA3mF"
+ziro_delta_epoch_manager = "ZDEpocVzx2yB8Q9k3cL5mD4nJ7eF6PqA1zH9r8GtC6W"
+ziro_delta_minting = "ZDMintKjq4vL7N8m2eB9xR3cF5zA1wH6pD7sG9tE2nL"
+ziro_delta_emergency = "ZDEmrgB5v3xH9L2k4mE8qF7zA6wR1pD4cG9tA5nL8jK"
+mock_oracle = "MockOrcH3k7B9m2eF8qL6zA1wD4pG7sC5tA9nE2kL6xR"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+[test]
+startup_wait = 5000
+shutdown_wait = 2000
+upgradeable = false
+
+[test.validator]
+url = "https://api.devnet.solana.com"
+commitment = "processed"
+
+[[test.validator.account]]
+address = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+filename = "tests/fixtures/spl_token-3.5.0.so"
+
+[[test.validator.account]]  
+address = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+filename = "tests/fixtures/spl_associated_token-1.1.2.so" 

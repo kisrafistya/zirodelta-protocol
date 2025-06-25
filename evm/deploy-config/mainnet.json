@@ -1,0 +1,47 @@
+{
+  "minDelay": 172800,
+  "proposers": [],
+  "executors": [],
+  "zdltToken": "0x0000000000000000000000000000000000000000",
+  "votingDelay": 86400,
+  "votingPeriod": 604800,
+  "proposalThreshold": "100000000000000000000000",
+  "quorumFraction": 4,
+  "emergencyQuorumFraction": 10,
+  "oracleProviders": [
+    {
+      "name": "Chainlink",
+      "weight": 4000,
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "name": "Band Protocol",
+      "weight": 3500,
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "name": "API3",
+      "weight": 2500,
+      "address": "0x0000000000000000000000000000000000000000"
+    }
+  ],
+  "riskParameters": {
+    "maxPositionSize": "1000000000000000000000000",
+    "collateralizationRatio": 12000,
+    "maxFundingRate": 1000,
+    "dailyVolumeLimit": "100000000000000000000000",
+    "tradingFee": 30,
+    "protocolFeeRate": 100
+  },
+  "ammParameters": {
+    "twapWindow": 900,
+    "maxSlippageBPS": 500,
+    "maxTradeSize": "10000000000000000000000",
+    "dailyVolumeLimit": "100000000000000000000000"
+  },
+  "epochParameters": {
+    "epochDuration": 86400,
+    "settlementWindow": 3600,
+    "autoSettlementEnabled": true
+  }
+}
