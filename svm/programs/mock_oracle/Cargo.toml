@@ -1,0 +1,24 @@
+[package]
+name = "mock_oracle"
+version = "0.1.0"
+description = "Mock Oracle for ZiroDelta Protocol Testing"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "mock_oracle"
+
+[[bin]]
+name = "mock_oracle"
+path = "src/main.rs"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.25.0"
+anchor-spl = "0.25.0" 

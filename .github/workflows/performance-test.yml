@@ -196,16 +196,6 @@ jobs:
         name: evm-performance-analysis
         path: |
           evm/gas-report.md
-          evm/gas-results.json
-
-    - name: 📤 Upload Gas Analysis Reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: evm-gas-analysis
-        path: |
-          evm/gas-analysis-report.md
-          evm/gas-optimization-report.md
 
   solana-performance:
     name: 🟠 Solana Performance Analysis
@@ -444,8 +434,7 @@ jobs:
       with:
         name: solana-performance-analysis
         path: |
-          svm/compute-analysis-report.md
-          svm/memory-analysis-report.md
+          svm/performance-report.md
 
   performance-summary:
     name: 📋 Performance Summary
