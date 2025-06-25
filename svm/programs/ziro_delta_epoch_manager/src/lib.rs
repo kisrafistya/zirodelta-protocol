@@ -1,7 +1,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("6xK8vP3nF7mE2rA5sH9tL4zR6qG8wD3yB5nJ2kC7eM9");
 
 #[program]
 pub mod ziro_delta_epoch_manager {

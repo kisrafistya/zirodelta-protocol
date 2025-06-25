@@ -317,9 +317,17 @@ jobs:
     - name: 📦 Install Dependencies
       working-directory: ./svm
       run: |
+        echo "📦 Installing SVM dependencies..."
         if [ -f "package-lock.json" ]; then
-          npm ci
+          echo "📋 Attempting npm ci (fast install)..."
+          if npm ci; then
+            echo "✅ npm ci successful"
+          else
+            echo "⚠️ npm ci failed, falling back to npm install..."
+            npm install
+          fi
         else
+          echo "📦 No package-lock.json found, using npm install..."
           npm install
         fi
 

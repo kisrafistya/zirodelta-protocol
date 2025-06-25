@@ -1,7 +1,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("7nYcM2sB8kF3dP6wE9rT5xL4mH8qR9zA2tK6vJ3eG1N");
 
 #[program]
 pub mod ziro_delta_governance {
