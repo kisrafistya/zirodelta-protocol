@@ -252,13 +252,13 @@ jobs:
     - name: 📥 Download Security Reports
       uses: actions/download-artifact@v4
       with:
-        name: evm-security-analysis
+        name: evm-security-reports
         path: ./evm-security
 
     - name: 📥 Download Solana Security Reports
       uses: actions/download-artifact@v4
       with:
-        name: solana-security-analysis
+        name: solana-security-reports
         path: ./solana-security
 
     - name: 📊 Generate Combined Security Report

@@ -84,7 +84,7 @@ jobs:
         
         # Run gas analysis
         echo "📊 Running gas analysis..." > gas-report.md
-        npx hardhat test test/PerformanceTest.js --reporter json > gas-results.json || echo "Gas test completed"
+        npx hardhat test test/PerformanceTest.js || echo "Gas test completed"
         
         echo "## ⛽ Gas Usage Analysis" >> gas-report.md
         echo "✅ Contract deployment costs analyzed" >> gas-report.md
@@ -147,7 +147,7 @@ jobs:
         EOF
         
         echo "🚀 Running load tests..."
-        npx hardhat test test/LoadTest.js --reporter spec || echo "Load test completed"
+        npx hardhat test test/LoadTest.js || echo "Load test completed"
         
         echo "" >> gas-report.md
         echo "## 🚀 Load Testing Results" >> gas-report.md
@@ -207,8 +207,21 @@ jobs:
 
     - name: ☀️ Install Solana CLI
       run: |
-        curl -sSfL https://release.solana.com/v1.16.28/install | sh
+        echo "Installing Solana CLI..."
+        
+        # Try primary installation method
+        if curl -sSfL https://release.solana.com/v1.18.2/install | sh; then
+          echo "✅ Primary installation successful"
+        else
+          echo "⚠️ Primary installation failed, trying stable release..."
+          curl -sSfL https://release.solana.com/stable/install | sh
+        fi
+        
         echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+        
+        # Verify installation
+        export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+        solana --version
 
     - name: ⚓ Install Anchor CLI
       run: npm install -g @coral-xyz/anchor-cli@0.28.0
@@ -220,7 +233,12 @@ jobs:
 
     - name: 📦 Install Dependencies
       working-directory: ./svm
-      run: npm ci
+      run: |
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        else
+          npm install
+        fi
 
     - name: 🏗️ Build Programs
       working-directory: ./svm

@@ -13,7 +13,7 @@ on:
       - '.github/workflows/solana-ci.yml'
 
 env:
-  SOLANA_VERSION: '1.16.0'
+  SOLANA_VERSION: '1.18.2'
   RUST_VERSION: '1.70.0'
   NODE_VERSION: '18'
 
@@ -37,9 +37,20 @@ jobs:
     - name: ⚡ Setup Solana CLI
       run: |
         echo "Installing Solana CLI v${{ env.SOLANA_VERSION }}..."
-        sh -c "$(curl -sSfL https://release.solana.com/v${{ env.SOLANA_VERSION }}/install)"
+        
+        # Try primary installation method
+        if curl -sSfL https://release.solana.com/v${{ env.SOLANA_VERSION }}/install | sh; then
+          echo "✅ Primary installation successful"
+        else
+          echo "⚠️ Primary installation failed, trying alternative method..."
+          # Fallback to latest stable
+          curl -sSfL https://release.solana.com/stable/install | sh
+        fi
+        
         echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
         export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+        
+        # Verify installation
         solana --version
         echo "✅ Solana CLI installed successfully"
 

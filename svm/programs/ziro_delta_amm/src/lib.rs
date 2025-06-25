@@ -64,7 +64,7 @@ pub mod ziro_delta_amm {
 
         let liquidity_to_mint = if state.total_liquidity == 0 {
             // Initial liquidity - geometric mean
-            ((pfrt_amount as u128 * nfrt_amount as u128).integer_sqrt() as u64)
+            (pfrt_amount as u128 * nfrt_amount as u128).integer_sqrt() as u64
         } else {
             // Proportional liquidity
             let pfrt_liquidity = (pfrt_amount as u128 * state.total_liquidity as u128) / state.pfrt_balance as u128;
@@ -232,7 +232,7 @@ pub mod ziro_delta_amm {
         // Update TWAP
         update_twap(state)?;
 
-        emit!(Swap {
+        emit!(SwapEvent {
             user: ctx.accounts.user.key(),
             amount_in,
             amount_out,
@@ -554,7 +554,7 @@ pub struct LiquidityAdded {
 }
 
 #[event]
-pub struct Swap {
+pub struct SwapEvent {
     pub user: Pubkey,
     pub amount_in: u64,
     pub amount_out: u64,

@@ -158,9 +158,21 @@ jobs:
         echo "☀️ Deploying to Solana devnet..."
         
         if [ "${{ secrets.SOLANA_STAGING_WALLET }}" != "" ]; then
-          # Install Solana CLI
-          curl -sSfL https://release.solana.com/v1.16.28/install | sh
-          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+                  # Install Solana CLI
+        echo "Installing Solana CLI..."
+        
+        if curl -sSfL https://release.solana.com/v1.18.2/install | sh; then
+          echo "✅ Primary installation successful"
+        else
+          echo "⚠️ Primary installation failed, trying stable release..."
+          curl -sSfL https://release.solana.com/stable/install | sh
+        fi
+        
+        echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+        
+        # Verify installation
+        export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+        solana --version
           
           # Install Anchor
           npm install -g @coral-xyz/anchor-cli@0.28.0
@@ -280,9 +292,21 @@ jobs:
         echo "☀️ Deploying to Solana mainnet..."
         
         if [ "${{ secrets.SOLANA_PRODUCTION_WALLET }}" != "" ]; then
-          # Install tools
-          curl -sSfL https://release.solana.com/v1.16.28/install | sh
-          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+                  # Install tools
+        echo "Installing Solana CLI..."
+        
+        if curl -sSfL https://release.solana.com/v1.18.2/install | sh; then
+          echo "✅ Primary installation successful"
+        else
+          echo "⚠️ Primary installation failed, trying stable release..."
+          curl -sSfL https://release.solana.com/stable/install | sh
+        fi
+        
+        echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+        
+        # Verify installation
+        export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+        solana --version
           npm install -g @coral-xyz/anchor-cli@0.28.0
           
           # Set mainnet cluster  

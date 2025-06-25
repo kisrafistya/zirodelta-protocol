@@ -14,11 +14,6 @@ jobs:
     name: 🔷 EVM Integration Tests
     runs-on: ubuntu-latest
     
-    services:
-      hardhat-node:
-        image: node:18
-        options: --network-host
-    
     steps:
     - name: 📥 Checkout Repository
       uses: actions/checkout@v4
@@ -271,8 +266,21 @@ jobs:
 
     - name: ☀️ Install Solana CLI
       run: |
-        curl -sSfL https://release.solana.com/v1.16.28/install | sh
+        echo "Installing Solana CLI..."
+        
+        # Try primary installation method
+        if curl -sSfL https://release.solana.com/v1.18.2/install | sh; then
+          echo "✅ Primary installation successful"
+        else
+          echo "⚠️ Primary installation failed, trying stable release..."
+          curl -sSfL https://release.solana.com/stable/install | sh
+        fi
+        
         echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+        
+        # Verify installation
+        export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+        solana --version
 
     - name: ⚓ Install Anchor CLI
       run: npm install -g @coral-xyz/anchor-cli@0.28.0
@@ -284,7 +292,12 @@ jobs:
 
     - name: 📦 Install Dependencies
       working-directory: ./svm
-      run: npm ci
+      run: |
+        if [ -f "package-lock.json" ]; then
+          npm ci
+        else
+          npm install
+        fi
 
     - name: 🏗️ Build Programs
       working-directory: ./svm

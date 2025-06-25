@@ -50,10 +50,10 @@ jobs:
         echo "🚀 Starting comprehensive test suite..."
         
         echo "🛡️ Running Production Readiness Tests..."
-        npx hardhat test test/ProductionReadiness.test.js --reporter spec
+        npx hardhat test test/ProductionReadiness.test.js
         
         echo "🏛️ Running Governance Integration Tests..."
-        npx hardhat test test/GovernanceIntegration.test.js --reporter spec || echo "⚠️ Governance tests completed with warnings"
+        npx hardhat test test/GovernanceIntegration.test.js || echo "⚠️ Governance tests completed with warnings"
         
         echo "✅ All critical tests completed!"
 
@@ -192,7 +192,7 @@ jobs:
       working-directory: ./evm
       run: |
         echo "⛽ Analyzing gas usage..."
-        npx hardhat test --reporter hardhat-gas-reporter || echo "Gas report completed"
+        npx hardhat test || echo "Gas report completed"
         
         echo "📊 Gas Usage Summary:" > gas-report.md
         echo "- Contract deployment and function call costs analyzed" >> gas-report.md
