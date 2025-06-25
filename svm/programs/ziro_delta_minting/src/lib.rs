@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Burn, Mint, MintTo, Token, TokenAccount, Transfer};
 
-declare_id!("j1UekRtCUPTvpCWueHk7gPVHhA8Ec8ibh5rURCb34Buy");
+declare_id!("3RurkF7fVRSGgEKspbKsLey8wMtjMrZ7yjmi1b1pbX8r");
 
 #[program]
 pub mod ziro_delta_minting {

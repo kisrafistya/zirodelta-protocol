@@ -197,9 +197,27 @@ jobs:
           # Set devnet cluster
           solana config set --url devnet
           
-          # Build and deploy
-          anchor build
-          anchor deploy --network devnet
+          # Build and deploy with proper error handling
+          echo "🔨 Building Anchor programs for staging..."
+          
+          # Verify Anchor.toml configuration
+          echo "📋 Checking Anchor.toml configuration..."
+          if [ -f "Anchor.toml" ]; then
+            echo "✅ Anchor.toml found"
+            echo "📝 Program IDs configured:"
+            grep -A 10 "\[programs.localnet\]" Anchor.toml || echo "No program IDs section found"
+          else
+            echo "❌ Anchor.toml not found!"
+            exit 1
+          fi
+          
+          if anchor build; then
+            echo "✅ Programs built successfully"
+            anchor deploy --network devnet
+          else
+            echo "❌ Build failed during staging deployment"
+            exit 1
+          fi
           
           echo "✅ Solana devnet deployment completed"
         else
@@ -345,9 +363,27 @@ jobs:
           # Set mainnet cluster  
           solana config set --url mainnet-beta
           
-          # Build and deploy
-          anchor build
-          anchor deploy --network mainnet
+          # Build and deploy with proper error handling
+          echo "🔨 Building Anchor programs for production..."
+          
+          # Verify Anchor.toml configuration
+          echo "📋 Checking Anchor.toml configuration..."
+          if [ -f "Anchor.toml" ]; then
+            echo "✅ Anchor.toml found"
+            echo "📝 Program IDs configured:"
+            grep -A 10 "\[programs.localnet\]" Anchor.toml || echo "No program IDs section found"
+          else
+            echo "❌ Anchor.toml not found!"
+            exit 1
+          fi
+          
+          if anchor build; then
+            echo "✅ Programs built successfully for production"
+            anchor deploy --network mainnet
+          else
+            echo "❌ Build failed during production deployment"
+            exit 1
+          fi
           
           echo "✅ Solana mainnet deployment completed"
         else

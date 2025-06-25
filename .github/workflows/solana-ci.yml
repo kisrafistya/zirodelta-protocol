@@ -149,8 +149,52 @@ jobs:
       working-directory: ./svm
       run: |
         echo "🔨 Building Solana programs..."
-        anchor build
-        echo "✅ Programs built successfully"
+        
+        # Verify Anchor.toml configuration
+        echo "📋 Checking Anchor.toml configuration..."
+        if [ -f "Anchor.toml" ]; then
+          echo "✅ Anchor.toml found"
+          echo "📝 Program IDs configured:"
+          grep -A 10 "\[programs.localnet\]" Anchor.toml || echo "No program IDs section found"
+        else
+          echo "❌ Anchor.toml not found!"
+          exit 1
+        fi
+        
+        # Build with proper error handling
+        echo "🔨 Building Anchor programs..."
+        if anchor build; then
+          echo "✅ Programs built successfully"
+          
+          # List built programs
+          if [ -d "target/deploy" ]; then
+            echo "📦 Built programs:"
+            ls -la target/deploy/*.so 2>/dev/null || echo "No .so files found"
+          fi
+        else
+          echo "❌ Build failed, checking individual programs..."
+          
+          # Try building each program individually for better error isolation
+          for program_dir in programs/*/; do
+            if [ -d "$program_dir" ]; then
+              program_name=$(basename "$program_dir")
+              echo "🔨 Checking $program_name..."
+              
+              cd "$program_dir" || continue
+              if cargo check --message-format=short; then
+                echo "✅ $program_name syntax check passed"
+              else
+                echo "❌ $program_name has compilation errors"
+                exit 1
+              fi
+              cd - > /dev/null
+            fi
+          done
+          
+          echo "❌ Anchor build failed, but individual program checks passed"
+          echo "This may be a configuration issue in Anchor.toml"
+          exit 1
+        fi
 
     - name: 🧪 Run Test Suite
       working-directory: ./svm

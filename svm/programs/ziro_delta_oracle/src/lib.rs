@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("R7Sz61ijudMTApmDmnDW8CkUcQXJLbDGXeANf2G7JQK9");
+declare_id!("H73D4VqwH9zzccTmtTf7Hw8Hnt8C8gjhYrDZbYDvGkX6");
 
 #[program]
 pub mod ziro_delta_oracle {

@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("MM3ZfaE7dtH6qf4NfmPntaBMkEB3HxjXFsomrhZr9aN6");
+declare_id!("DRxmB3DakG4vPtzyLzwydThjmrsDty59TQqGUfUjuvoi");
 
 #[program]
 pub mod ziro_delta_emergency {

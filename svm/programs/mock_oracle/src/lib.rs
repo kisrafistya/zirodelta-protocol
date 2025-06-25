@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("TtJi2NxdB1qv6eZSML5AkJ8v3GNBVmofcWqpLUrTGdGE");
+declare_id!("B6SQqosR7NA37eB8wCEotSbXBiEayFQgD6SZuYUDdNiv");
 
 #[program]
 pub mod mock_oracle {
